@@ -3,6 +3,10 @@ from PIL import Image
 from predict import load_model, predict
 import tempfile
 import os
+import sys
+# Force headless mode for OpenCV before anything else loads
+os.environ["QT_QPA_PLATFORM"] = "offscreen"
+
 
 st.set_page_config(
     page_title="Spill & Dustbin Detector",
