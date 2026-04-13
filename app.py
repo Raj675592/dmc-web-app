@@ -4,21 +4,17 @@ from predict import load_model, predict
 import tempfile
 import os
 
-# ── Page config ────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Spill & Dustbin Detector",
     page_icon="🗑️",
     layout="wide",
 )
 
-# ── Custom CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
-}
+html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 
 .stApp {
     background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
@@ -27,11 +23,7 @@ html, body, [class*="css"] {
 
 #MainMenu, footer, header {visibility: hidden;}
 
-/* Hero */
-.hero {
-    text-align: center;
-    padding: 2rem 1rem 1.5rem;
-}
+.hero { text-align: center; padding: 2rem 1rem 1.5rem; }
 .hero h1 {
     font-family: 'Syne', sans-serif;
     font-size: 2.6rem;
@@ -42,14 +34,8 @@ html, body, [class*="css"] {
     margin-bottom: 0.3rem;
     letter-spacing: -1px;
 }
-.hero p {
-    color: #9ca3af;
-    font-size: 1rem;
-    font-weight: 300;
-    margin: 0;
-}
+.hero p { color: #9ca3af; font-size: 1rem; font-weight: 300; margin: 0; }
 
-/* Badge */
 .badge {
     display: inline-block;
     background: rgba(52,211,153,0.15);
@@ -63,14 +49,12 @@ html, body, [class*="css"] {
     margin-bottom: 1.5rem;
 }
 
-/* Cards */
 .card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 20px;
     padding: 1.8rem;
     backdrop-filter: blur(12px);
-    height: 100%;
 }
 
 .section-label {
@@ -83,33 +67,22 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
-/* Divider between columns */
-.col-divider {
-    border-left: 1px solid rgba(255,255,255,0.07);
-    height: 100%;
-    margin: 0 auto;
-}
-
-/* File uploader */
 [data-testid="stFileUploader"] {
     background: rgba(167,139,250,0.05) !important;
     border: 2px dashed rgba(167,139,250,0.3) !important;
     border-radius: 14px !important;
     padding: 1rem !important;
-    transition: border-color 0.3s;
 }
 [data-testid="stFileUploader"]:hover {
     border-color: rgba(167,139,250,0.7) !important;
 }
 
-/* Image */
 [data-testid="stImage"] img {
     border-radius: 14px !important;
     border: 1px solid rgba(255,255,255,0.08) !important;
     width: 100% !important;
 }
 
-/* Placeholder box */
 .placeholder {
     background: rgba(255,255,255,0.02);
     border: 2px dashed rgba(255,255,255,0.07);
@@ -123,12 +96,8 @@ html, body, [class*="css"] {
     font-size: 0.9rem;
     gap: 0.6rem;
 }
-.placeholder-icon {
-    font-size: 2.5rem;
-    opacity: 0.4;
-}
+.placeholder-icon { font-size: 2.5rem; opacity: 0.4; }
 
-/* Results */
 .result-positive {
     background: linear-gradient(135deg, rgba(239,68,68,0.12), rgba(239,68,68,0.04));
     border: 1px solid rgba(239,68,68,0.35);
@@ -156,32 +125,6 @@ html, body, [class*="css"] {
 .result-negative .result-label { color: #34d399; }
 .result-sub { font-size: 0.85rem; color: #9ca3af; }
 
-/* Tags */
-.tags {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 0.9rem;
-}
-.tag {
-    border-radius: 999px;
-    padding: 0.28rem 0.85rem;
-    font-size: 0.78rem;
-    font-weight: 500;
-}
-.tag-detected {
-    background: rgba(96,165,250,0.15);
-    border: 1px solid rgba(96,165,250,0.4);
-    color: #93c5fd;
-}
-.tag-missing {
-    background: rgba(107,114,128,0.12);
-    border: 1px solid rgba(107,114,128,0.25);
-    color: #6b7280;
-}
-
-/* Score box */
 .score-box {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
@@ -210,7 +153,6 @@ html, body, [class*="css"] {
 </style>
 """, unsafe_allow_html=True)
 
-
 # ── Hero ───────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero">
@@ -218,7 +160,6 @@ st.markdown("""
     <p>AI-powered hazard detection — upload an image and get instant results</p>
 </div>
 """, unsafe_allow_html=True)
-
 
 # ── Load model ─────────────────────────────────────────────────────────────────
 @st.cache_resource
@@ -229,7 +170,6 @@ with st.spinner("Initialising model..."):
     model = get_model()
 
 st.markdown('<div style="text-align:center"><span class="badge">✦ Model ready</span></div>', unsafe_allow_html=True)
-
 
 # ── Two column layout ──────────────────────────────────────────────────────────
 left_col, divider_col, right_col = st.columns([10, 0.3, 10])
@@ -264,11 +204,9 @@ with left_col:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-
 # ── DIVIDER ────────────────────────────────────────────────────────────────────
 with divider_col:
-    st.markdown('<div class="col-divider"></div>', unsafe_allow_html=True)
-
+    st.markdown('<div style="border-left:1px solid rgba(255,255,255,0.07); min-height:400px;"></div>', unsafe_allow_html=True)
 
 # ── RIGHT: Output ──────────────────────────────────────────────────────────────
 with right_col:
@@ -283,33 +221,16 @@ with right_col:
             <span style="font-size:0.78rem;">Upload an image on the left to begin</span>
         </div>
         """, unsafe_allow_html=True)
-
     else:
-        # Save temp file and run prediction
         tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
         img.save(tmp.name)
         tmp.close()
 
         with st.spinner("Analysing image..."):
-            result = predict(model, tmp.name)
-
-            # Get individual detections for tags
-            _res = model(tmp.name, imgsz=512, conf=0.2, device="cpu", verbose=False)
+            result = predict(model, tmp.name)   # returns only 0 or 1
 
         os.unlink(tmp.name)
 
-        dustbin_found = any(
-            int(b.cls[0]) == 0
-            for r in _res if r.boxes
-            for b in r.boxes
-        )
-        spill_found = any(
-            int(b.cls[0]) == 1
-            for r in _res if r.boxes
-            for b in r.boxes
-        )
-
-        # Score box
         score_class = "score-positive" if result == 1 else "score-negative"
         st.markdown(f"""
         <div class="score-box">
@@ -318,26 +239,20 @@ with right_col:
         </div>
         """, unsafe_allow_html=True)
 
-        # Result card
-        dustbin_tag = '<span class="tag tag-detected">🗑️ Dustbin detected</span>' if dustbin_found else '<span class="tag tag-missing">🗑️ No dustbin</span>'
-        spill_tag   = '<span class="tag tag-detected">💧 Spill detected</span>'   if spill_found   else '<span class="tag tag-missing">💧 No spill</span>'
-
         if result == 1:
-            st.markdown(f"""
+            st.markdown("""
             <div class="result-positive">
                 <div class="result-icon">🚨</div>
                 <div class="result-label">Hazard Detected!</div>
                 <div class="result-sub">Both dustbin and spill found in the image.</div>
-                <div class="tags">{dustbin_tag}{spill_tag}</div>
             </div>
             """, unsafe_allow_html=True)
         else:
-            st.markdown(f"""
+            st.markdown("""
             <div class="result-negative">
                 <div class="result-icon">✅</div>
                 <div class="result-label">All Clear</div>
                 <div class="result-sub">Dustbin and spill not both present.</div>
-                <div class="tags">{dustbin_tag}{spill_tag}</div>
             </div>
             """, unsafe_allow_html=True)
 
